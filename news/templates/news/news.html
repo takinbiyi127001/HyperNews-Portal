@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    News
+{% endblock %}
+
+{% block css_files %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% for page in news %}
+    <h2>{{ page.title }}</h2>
+<p>{{ page.created }}</p>
+<p>{{ page.text}}</p>
+    {% endfor %}
+
+
+{% endblock %}

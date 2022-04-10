@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ Create News
+{% endblock %}
+
+{% block css_files %}
+
+{% endblock %}
+
+
+{% block content %}
+    <div>
+        <a href="{% url 'main' %}">Hyper News</a>
+    </div>
+
+    <div>
+
+        <form action="" method="POST">
+        {% csrf_token %}
+            <label for="title">Title</label>
+            <input type="text" name="title" id=""><br>
+            <label for="text">Text</label>
+            <input type="text" name="text" id=""><br>
+            <button type="submit">Create News</button>
+        </form>
+    </div>
+{% endblock %}

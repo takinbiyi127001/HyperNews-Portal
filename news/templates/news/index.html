@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+HyperNews
+{% endblock %}
+
+{% block css_files %}
+
+{% endblock %}
+
+{% block content %}
+
+    <h2>Hyper news</h2>
+    
+{#    {% if  %}#}
+{#    #}
+{#    {% endif %} #}
+<div>
+    <form action="" method="get">
+        <input type="text" name="q" id="">
+        <button type="submit">Search News</button>
+    </form>
+</div>
+
+    {% regroup news by created as news_list %}
+<div class="container">
+    <ul>
+        {% for created in news_list %}
+            <h4>{{ created.grouper }}</h4>
+            <ul>
+                {% for page in created.list %}
+                  <li><a href="{{ page.link }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul>
+</div>
+   <a href="{% url 'create' %}">Create News</a>
+{% endblock %}
