@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 HyperNews
@@ -10,30 +11,41 @@ HyperNews
 
 {% block content %}
 
-    <h2>Hyper news</h2>
-    
-{#    {% if  %}#}
-{#    #}
-{#    {% endif %} #}
-<div>
-    <form action="" method="get">
-        <input type="text" name="q" id="">
-        <button type="submit">Search News</button>
-    </form>
+
+<div class="container mb-5">
+<form action="{% url 'search' %}" method="GET">
+    <div class="input-group p-3 w-50 float-sm-end">
+        <input class="form-control" type="text" name="q" id="" placeholder="Search News...">
+         <div class="input-group-append">
+            <button class="btn btn-outline-secondary" name='submit' type="submit" value="Search">Search News</button>
+         </div>
+    </div>
+ </form>
 </div>
 
-    {% regroup news by created as news_list %}
-<div class="container">
-    <ul>
+    {% if submit_button == 'Search' %}
+        {% regroup search by created as news_list %}
+    {% else %}
+        {% regroup news by created as news_list %}
+    {% endif %}
+
+
+     <h2>Hyper news</h2>
+<div class="container mt-5">
+    <ul class="list-group">
         {% for created in news_list %}
             <h4>{{ created.grouper }}</h4>
-            <ul>
+            <ul class="list-group mb-5">
                 {% for page in created.list %}
-                  <li><a href="{{ page.link }}">{{ page.title }}</a></li>
+                  <li class="list-group-item"><a href="{{ page.link }}">{{ page.title }}</a></li>
                 {% endfor %}
             </ul>
         {% endfor %}
         </ul>
 </div>
-   <a href="{% url 'create' %}">Create News</a>
+
+    <div class="container">
+        <a href="{% url 'create' %}">Create News</a>
+    </div>
+
 {% endblock %}

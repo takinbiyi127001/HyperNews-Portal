@@ -8,14 +8,17 @@ from datetime import datetime
 from django.views import View
 
 
+# filter function used in sorted
 def get_date(post):
     return post['created']
 
 
+# open json file for reading
 with open("./news.json", 'r') as f:
     json_data = json.load(f)
 
 
+# compute unique a id for each link
 def uniqueid():
     seed = random.getrandbits(32)
     while True:
@@ -26,6 +29,7 @@ def uniqueid():
 unique_sequence = uniqueid()
 
 
+# extract date from datetime string
 def copy_date(data):
     cpy_list = []
     for li in data:
@@ -41,6 +45,7 @@ def welcome_page(request):
 
 
 class MainPageView(View):
+    """HyperNews Main page - Collect the news articles on one page and display them all to our users."""
     template_name = 'news/index.html'
 
     def get(self, request):
@@ -53,6 +58,9 @@ class MainPageView(View):
 
 
 class CreateNewsView(View):
+    """HyperNews Create news page: a web interface for creating news articles using form
+    The link in the storage should be a random number, and it must be unique for every news article.
+    Using the current time to populate the created field, and convert it to a string before saving it to JSON."""
     template_name = 'news/create_news.html'
 
     def get(self, request):
@@ -83,19 +91,31 @@ class CreateNewsView(View):
 
 
 class SearchNewsView(View):
+    """HyperNews Search news- Search functionality to the site
+    Add a search form to the main page with one input element with the name q.
+    The form should send GET requests to the same /news/ page.
+    The format of the result page stays the same but includes only articles
+    whose titles match the search term"""
     template_name = 'news/index.html'
 
     def get(self, request):
         query = request.GET.get('q')
-        # lookup json data and returns all news that contains search
-        search_result = [item for item in json_data if item['title'].__contains__(query)]
-        context = {
-            'search': search_result
-        }
-        return render(request, template_name=self.template_name, context=context)
+        submit_button = request.GET.get('submit')
+        if query is not None:
+            # lookup json data and returns all news that contains search
+            search_result = [item for item in json_data if item['title'].__contains__(query)]
+            sorted_post = sorted(search_result, key=get_date, reverse=True)
+            final_post = copy_date(sorted_post)
+            context = {
+                'submit_button': submit_button,
+                'search': final_post
+            }
+            return render(request, template_name=self.template_name, context=context)
+        return redirect('/news/')
 
 
 class SinglePageView(View):
+    """Get single news based on requests"""
     template_name = 'news/news.html'
 
     def get(self, request, link):

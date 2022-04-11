@@ -11,9 +11,11 @@
 
 {% block content %}
     {% for page in news %}
-    <h2>{{ page.title }}</h2>
-<p>{{ page.created }}</p>
-<p>{{ page.text}}</p>
+        <div class="container">
+            <h2>{{ page.title }}</h2>
+            <p>{{ page.created }}</p>
+            <p>{{ page.text}}</p>
+        </div>
     {% endfor %}
 
 

@@ -1,18 +1,22 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}
-
     {% endblock %}</title>
-
+        <link rel="stylesheet" href="{% static 'boot/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'boot/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'base.css' %}">
     {% block css_files %}
-
     {% endblock %}
 </head>
 <body>
+<nav class="navbar sticky-top navbar-dark bg-dark">
+        <a href="{% url 'main' %}" class="navbar-brand">Hyper News</a>
+    </nav>
 {% block content %}
-
 {% endblock %}
 </body>
 </html>

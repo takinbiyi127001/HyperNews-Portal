@@ -10,19 +10,24 @@
 
 
 {% block content %}
-    <div>
-        <a href="{% url 'main' %}">Hyper News</a>
-    </div>
+{#    <div>#}
+{#        <a href="{% url 'main' %}">Hyper News</a>#}
+{#    </div>#}
 
-    <div>
-
+    <div class="container mt-5">
         <form action="" method="POST">
         {% csrf_token %}
-            <label for="title">Title</label>
-            <input type="text" name="title" id=""><br>
-            <label for="text">Text</label>
-            <input type="text" name="text" id=""><br>
-            <button type="submit">Create News</button>
+            <div class="form-group mb-3">
+                <label for="title">Title</label>
+                <input class="form-control" type="text" name="title" id="" placeholder="Enter news title">
+            </div>
+            <div class="form-group mb-3">
+                <label for="message">Text</label>
+                <textarea class="form-control" id="message" rows="3" name="text"></textarea>
+{#                <input class="form-control" type="text" name="text" id="" placeholder="Enter news"><br>#}
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Create News</button>
+
         </form>
     </div>
 {% endblock %}

@@ -7,5 +7,5 @@ urlpatterns = [
     path('news/', views.MainPageView.as_view(), name='main'),
     path('news/<int:link>', views.SinglePageView.as_view()),
     path('new/create/', views.CreateNewsView.as_view(), name='create'),
-
+    path('search/', views.SearchNewsView.as_view(), name='search')
 ]
